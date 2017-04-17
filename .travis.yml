@@ -28,5 +28,5 @@ deploy:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: joeschmid/lookml_gen
+    repo: symphonyrm/lookml-gen
     condition: $TOXENV == py27
