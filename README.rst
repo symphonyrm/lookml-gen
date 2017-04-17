@@ -6,8 +6,8 @@ LookML Generator
 .. image:: https://img.shields.io/pypi/v/lookml-gen.svg
         :target: https://pypi.python.org/pypi/lookml-gen
 
-.. image:: https://img.shields.io/travis/symphonyrm/lookml_gen.svg
-        :target: https://travis-ci.org/symphonyrm/lookml-gen
+.. image:: https://travis-ci.com/symphonyrm/lookml-gen.svg
+    :target: https://travis-ci.com/symphonyrm/lookml-gen
 
 .. image:: https://readthedocs.org/projects/lookml-gen/badge/?version=latest
         :target: https://lookml-gen.readthedocs.io/en/latest/?badge=latest
