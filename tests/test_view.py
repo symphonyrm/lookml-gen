@@ -31,7 +31,7 @@ def test_pdt_view():
                             indexes=['id'])
     v = view.View(testname)
     v.derived_table = pdt
-    v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number'))
+    v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number', primary_key=True))
     v.add_field(field.Dimension('c', sql='${TABLE}.c', type='number'))
     v.add_field(field.Measure('sum_c', sql='${TABLE}.c', type='sum'))
     f = six.StringIO()

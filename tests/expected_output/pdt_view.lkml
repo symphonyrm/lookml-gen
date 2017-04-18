@@ -12,6 +12,7 @@ view: pdt_view {
   }
 
   dimension: id {
+    primary_key: yes
     type: number
     sql: ${TABLE}.c ;;
   }
