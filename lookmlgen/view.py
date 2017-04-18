@@ -14,6 +14,14 @@ from field import FieldType
 
 
 class View(BaseGenerator):
+    """Generates a LookML View
+
+    Initialize a View object with your parameters,  
+    add Fields such as :class:`Dimensions`s, :class:`Measures`s,
+    :class:`DimensionGroups`s, and :class:`Filters`s, and then
+    generate LookML for the view using :method:`generate_lookml`
+
+    """
     def __init__(self, name, label=None, sql_table_name=None, file=None):
         super(View, self).__init__(file=file)
         self.name = name
@@ -23,6 +31,14 @@ class View(BaseGenerator):
         self.derived_table = None
 
     def generate_lookml(self, file=None, format_options=None):
+        """ Writes LookML for the view to a file or StringIO buffer.
+
+        Args:
+            file(filehandle): Filehandle of a file open for writing or a
+            StringIO object
+            format_options(:class:`GeneratorFormatOptions`): Formatting
+            options to use during generation
+        """
         if not file and not self.file:
             raise ValueError('Must provide a file in either the constructor '
                              'or as a parameter to generate_lookml()')
@@ -55,10 +71,12 @@ class View(BaseGenerator):
         return
 
     def add_field(self, field):
+        """Adds a :class:`Field` object to a :class:`View`"""
         self.fields[field.name] = field
         return
 
     def add_derived_table(self, derived_table):
+        """Adds a :class:`DerivedTable` object to a :class:`View`"""
         self.derived_table = derived_table
 
     @classmethod
