@@ -4,8 +4,8 @@ Usage
 
 To use LookML Generator in a project::
 
-    from lookml_gen import view
-    from lookml_gen import field
+    from lookmlgen import view
+    from lookmlgen import field
 
     v = view.View('my_view')
     v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number', primary_key=True))
