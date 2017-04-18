@@ -11,7 +11,8 @@ from lookmlgen import field
 from lookmlgen import base_generator
 
 
-test_format_options = base_generator.GeneratorFormatOptions(warning_header_comment=None)
+test_format_options = base_generator.\
+    GeneratorFormatOptions(warning_header_comment=None)
 
 
 def test_basic_view():
@@ -21,22 +22,28 @@ def test_basic_view():
     f = six.StringIO()
     v.generate_lookml(f, format_options=test_format_options)
     lookml = f.getvalue()
-    with open(os.path.join(os.path.dirname(__file__), 'expected_output/%s.lkml' % testname), 'rt') as expected:
+    with open(os.path.join(os.path.dirname(__file__),
+                           'expected_output/%s.lkml' % testname),
+              'rt') as expected:
         assert lookml == expected.read()
 
 
 def test_pdt_view():
     testname = 'pdt_view'
-    pdt = view.DerivedTable(sql="SELECT id, count(*) c FROM table GROUP BY id", sql_trigger_value='DATE()',
+    pdt = view.DerivedTable(sql="SELECT id, count(*) c FROM table GROUP BY id",
+                            sql_trigger_value='DATE()',
                             indexes=['id'])
     v = view.View(testname)
     v.derived_table = pdt
-    v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number', primary_key=True))
+    v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number',
+                                primary_key=True))
     v.add_field(field.Dimension('c', sql='${TABLE}.c', type='number'))
     v.add_field(field.Measure('sum_c', sql='${TABLE}.c', type='sum'))
     f = six.StringIO()
     v.generate_lookml(f, format_options=test_format_options)
     lookml = f.getvalue()
     six.print_(lookml)
-    with open(os.path.join(os.path.dirname(__file__), 'expected_output/%s.lkml' % testname), 'rt') as expected:
+    with open(os.path.join(os.path.dirname(__file__),
+                           'expected_output/%s.lkml' % testname),
+              'rt') as expected:
         assert lookml == expected.read()
