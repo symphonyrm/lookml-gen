@@ -46,7 +46,7 @@ Use it::
     from lookmlgen import field
 
     v = view.View('my_view')
-    v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number', primary_key=True))
+    v.add_field(field.Dimension('id', sql='${TABLE}.id', type='number', primary_key=True))
     v.add_field(field.Dimension('c', sql='${TABLE}.c', type='number'))
     v.add_field(field.Measure('sum_c', sql='${TABLE}.c', type='sum'))
 
@@ -68,7 +68,7 @@ See it::
       dimension: id {
         primary_key: yes
         type: number
-        sql: ${TABLE}.c ;;
+        sql: ${TABLE}.id ;;
       }
 
       measure: sum_c {
