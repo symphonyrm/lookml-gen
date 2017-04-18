@@ -9,4 +9,4 @@ History
 
 0.1.1 (2017-04-17)
 ------------------
-Switch to lookmlgen for module name
+* Switch to lookmlgen for module name
