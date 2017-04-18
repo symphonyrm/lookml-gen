@@ -9,7 +9,7 @@ Contents:
    readme
    installation
    usage
-   modules
+   API Docs <lookmlgen>
    contributing
    authors
    history
