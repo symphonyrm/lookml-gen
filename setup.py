@@ -31,11 +31,6 @@ setup(
     ],
     package_dir={'lookmlgen':
                  'lookmlgen'},
-    entry_points={
-        'console_scripts': [
-            'lookmlgen=lookmlgen.cli:main'
-        ]
-    },
     include_package_data=True,
     install_requires=requirements,
     license="Apache Software License 2.0",
