@@ -10,5 +10,5 @@ click==6.7
 six==1.10.0
 Sphinx==1.5.5
 cryptography==1.8.1
-PyYAML==3.11
+PyYAML==3.12
 pytest==2.9.2
