@@ -1,5 +1,5 @@
 Welcome to LookML Generator's documentation!
-======================================
+============================================
 
 Contents:
 
