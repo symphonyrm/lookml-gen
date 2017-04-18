@@ -10,12 +10,23 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'Click>=6.0'
-    # TODO: put package requirements here
+    'six>=1.10.0'
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    'pip==9.0.1'
+    'bumpversion==0.5.3'
+    'backports.tempfile==1.0rc1'
+    'wheel==0.29.0'
+    'watchdog==0.8.3'
+    'flake8==3.3.0'
+    'tox==2.7.0'
+    'coverage==4.3.4'
+    'six==1.10.0'
+    'Sphinx==1.5.5'
+    'cryptography==1.8.1'
+    'PyYAML==3.12'
+    'pytest==3.0.7'
 ]
 
 setup(
