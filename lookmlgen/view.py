@@ -129,7 +129,7 @@ class DerivedTable(BaseGenerator):
         self.indexes = indexes
 
     def generate_lookml(self, file=None, format_options=None):
-        """ Writes LookML for the derived table to a file or StringIO buffer.
+        """ Writes LookML for a derived table to a file or StringIO buffer.
 
         :param file: File handle of a file open for writing or a
                      StringIO object

@@ -13,6 +13,20 @@ DEFAULT_WARNING_HEADER_COMMENT = \
 
 
 class GeneratorFormatOptions(object):
+    """Specify formatting options to be used during LookML generation
+
+    :param indent_spaces: Number of spaces to indent
+    :param newline_between_items: Add a newline between items
+    :param omit_default_field_type: Leave out 'type: string'
+    :param warning_header_comment: Text to use as a comment as the top
+                                   of the file warning the user that the
+                                   file will get overwritten
+    :type indent_spaces: int
+    :type newline_between_items: bool
+    :type omit_default_field_type: bool
+    :type warning_header_comment: string
+
+    """
     def __init__(self, indent_spaces=2, newline_between_items=True,
                  omit_default_field_type=True,
                  warning_header_comment=DEFAULT_WARNING_HEADER_COMMENT):

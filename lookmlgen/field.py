@@ -3,12 +3,15 @@
     Author: joeschmid
     Date created: 4/9/17
 """
+import json
+
 from base_generator import BaseGenerator
 
 DEFAULT_TYPE = 'string'
 
 
 class FieldType(object):
+    """Enum used to specify known Field types"""
     DIMENSION, DIMENSION_GROUP, FILTER, MEASURE = range(1, 5)
 
     @classmethod
@@ -27,6 +30,27 @@ class FieldType(object):
 
 
 class Field(BaseGenerator):
+    """Base class used to generate fields within a
+    :class:`~lookmlgen.view.View`
+
+    :param field_type: Name of the view
+    :param name: Name of the field
+    :param type: Type of the field contents, e.g. string, number, etc.
+    :param label: Label to use when displaying the field
+    :param sql: SQL snippet for the field
+    :param primary_key: Flag to designate the field as a primary key
+    :param hidden: Flag to designate the field as hidden
+    :param file: File handle of a file open for writing or a StringIO object
+    :type field_type: a class variable from :class:`FieldType`
+    :type name: string
+    :type type: string
+    :type label: string
+    :type sql: string
+    :type primary_key: bool
+    :type hidden: bool
+    :type file: File handle or StringIO object
+
+    """
     def __init__(self, field_type, name, type=DEFAULT_TYPE, label=None,
                  sql=None, primary_key=None, hidden=None,
                  file=None, **kwargs):
@@ -41,6 +65,16 @@ class Field(BaseGenerator):
         self.hidden = hidden
 
     def generate_lookml(self, file=None, format_options=None):
+        """ Writes LookML for a field to a file or StringIO buffer.
+
+        :param file: File handle of a file open for writing or a
+                     StringIO object
+        :param format_options: Formatting options to use during generation
+        :type file: File handle or StringIO object
+        :type format_options:
+            :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
+        """
         f = file if file else self.file
         fo = format_options if format_options else self.format_options
         f.write('{indent}{self.type_name}: {self.name} {{\n'.
@@ -70,32 +104,67 @@ class Field(BaseGenerator):
 
 
 class Dimension(Field):
+    """Generates LookML for a dimension field in a
+    :class:`~lookmlgen.view.View`
+
+    :param name: Name of the dimension
+    :type name: string
+
+    """
     def __init__(self, name, **kwargs):
         super(Dimension, self).__init__(FieldType.DIMENSION, name, **kwargs)
 
 
 class DimensionGroup(Field):
-    def __init__(self, name, timeframes='[time, date, week, month]',
-                 datatype='datetime', **kwargs):
+    """Generates LookML for a dimension_group field in a
+        :class:`~lookmlgen.view.View`
+
+    :param name: Name of the dimension group
+    :param timeframes: Timeframes for the group
+    :param datatype: Datatype for the group, defaults to 'datetime'
+    :type name: string
+    :type timeframes: list of strings
+    :type datatype: string
+
+    """
+    def __init__(self, name, timeframes=None, datatype='datetime', **kwargs):
         super(DimensionGroup, self).__init__(FieldType.DIMENSION_GROUP, name,
                                              type='time', **kwargs)
-        self.timeframes = timeframes
+        if not timeframes:
+            self.timeframes = ['time', 'date', 'week', 'month']
+        else:
+            self.timeframes = timeframes
         self.datatype = datatype
 
     def _generate(self, f, fo):
         if self.timeframes:
-            f.write('{indent}timeframes: {self.timeframes}\n'.
-                    format(indent=' ' * 2 * fo.indent_spaces, self=self))
+            f.write('{indent}timeframes: {timeframes}\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces,
+                           timeframes=json.dumps(self.timeframes)))
         if self.datatype:
             f.write('{indent}datatype: {self.datatype}\n'.
                     format(indent=' ' * 2 * fo.indent_spaces, self=self))
 
 
 class Measure(Field):
+    """Generates LookML for a measure field in a
+            :class:`~lookmlgen.view.View`
+
+    :param name: Name of the measure
+    :type name: string
+
+    """
     def __init__(self, name, **kwargs):
         super(Measure, self).__init__(FieldType.MEASURE, name, **kwargs)
 
 
 class Filter(Field):
+    """Generates LookML for a filter field in a
+            :class:`~lookmlgen.view.View`
+
+    :param name: Name of the filter
+    :type name: string
+
+    """
     def __init__(self, name, **kwargs):
         super(Filter, self).__init__(FieldType.FILTER, name, **kwargs)
