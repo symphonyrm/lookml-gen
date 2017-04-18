@@ -1,4 +1,4 @@
-pip==8.1.2
+pip==9.0.1
 bumpversion==0.5.3
 backports.tempfile==1.0rc1
 wheel==0.29.0
