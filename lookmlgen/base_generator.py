@@ -38,13 +38,32 @@ class GeneratorFormatOptions(object):
 
 @six.add_metaclass(abc.ABCMeta)
 class BaseGenerator:
-    def __init__(
-            self, file=None, format_options=GeneratorFormatOptions()):
+    """ Abstract base class for any subclass that generates LookML
+
+    :param file: File handle of a file open for writing or a
+                 StringIO object
+    :param format_options: Formatting options to use during generation
+    :type file: File handle or StringIO object
+    :type format_options:
+        :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
+    """
+    def __init__(self, file=None, format_options=GeneratorFormatOptions()):
         self.file = file
         self.format_options = format_options
 
     @abc.abstractmethod
     def generate_lookml(self, file=None, format_options=None):
+        """ Implement this method in subclasses to generate LookML
+
+        :param file: File handle of a file open for writing or a
+                     StringIO object
+        :param format_options: Formatting options to use during generation
+        :type file: File handle or StringIO object
+        :type format_options:
+            :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
+        """
         raise NotImplementedError(
             'You must implement the generate_lookml() method')
 

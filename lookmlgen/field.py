@@ -38,7 +38,6 @@ class Field(BaseGenerator):
     :param type: Type of the field contents, e.g. string, number, etc.
     :param label: Label to use when displaying the field
     :param sql: SQL snippet for the field
-    :param primary_key: Flag to designate the field as a primary key
     :param hidden: Flag to designate the field as hidden
     :param file: File handle of a file open for writing or a StringIO object
     :type field_type: a class variable from :class:`FieldType`
@@ -46,7 +45,6 @@ class Field(BaseGenerator):
     :type type: string
     :type label: string
     :type sql: string
-    :type primary_key: bool
     :type hidden: bool
     :type file: File handle or StringIO object
 
@@ -103,7 +101,9 @@ class Dimension(Field):
     :class:`~lookmlgen.view.View`
 
     :param name: Name of the dimension
+    :param primary_key: Flag to designate the field as a primary key
     :type name: string
+    :type primary_key: bool
 
     """
     def __init__(self, name, primary_key=None, **kwargs):
