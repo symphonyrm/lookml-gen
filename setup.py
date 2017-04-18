@@ -27,13 +27,13 @@ setup(
     author_email='jschmid@symphonyrm.com',
     url='https://github.com/symphonyrm/lookml-gen',
     packages=[
-        'lookml-gen',
+        'lookmlgen',
     ],
-    package_dir={'lookml-gen':
-                 'lookml_gen'},
+    package_dir={'lookmlgen':
+                 'lookmlgen'},
     entry_points={
         'console_scripts': [
-            'lookml_gen=lookml_gen.cli:main'
+            'lookmlgen=lookmlgen.cli:main'
         ]
     },
     include_package_data=True,

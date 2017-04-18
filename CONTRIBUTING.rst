@@ -110,5 +110,5 @@ Tips
 
 To run a subset of tests::
 
-$ py.test tests.test_lookml_gen
+$ py.test tests.test_view
 

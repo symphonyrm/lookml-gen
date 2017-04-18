@@ -6,9 +6,9 @@
 import os
 import six
 
-from lookml_gen import view
-from lookml_gen import field
-from lookml_gen import base_generator
+from lookmlgen import view
+from lookmlgen import field
+from lookmlgen import base_generator
 
 
 test_format_options = base_generator.GeneratorFormatOptions(warning_header_comment=None)

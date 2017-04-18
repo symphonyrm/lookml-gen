@@ -4,18 +4,18 @@ LookML Generator
 
 
 .. image:: https://img.shields.io/pypi/v/lookml-gen.svg
-        :target: https://pypi.python.org/pypi/lookml-gen
+    :target: https://pypi.python.org/pypi/lookml-gen
 
 .. image:: https://travis-ci.org/symphonyrm/lookml-gen.svg?branch=master
     :target: https://travis-ci.org/symphonyrm/lookml-gen
 
 .. image:: https://readthedocs.org/projects/lookml-gen/badge/?version=latest
-        :target: https://lookml-gen.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+    :target: http://lookml-gen.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/symphonyrm/lookml-gen/shield.svg
-     :target: https://pyup.io/repos/github/symphonyrm/lookml-gen/
-     :alt: Updates
+    :target: https://pyup.io/repos/github/symphonyrm/lookml-gen/
+    :alt: Updates
 
 
 Programmatically generate LookML
@@ -42,8 +42,8 @@ Install it::
 
 Use it::
 
-    from lookml_gen import view
-    from lookml_gen import field
+    from lookmlgen import view
+    from lookmlgen import field
 
     v = view.View('my_view')
     v.add_field(field.Dimension('id', sql='${TABLE}.c', type='number', primary_key=True))
