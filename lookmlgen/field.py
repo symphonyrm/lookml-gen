@@ -11,7 +11,7 @@ DEFAULT_TYPE = 'string'
 
 
 class FieldType(object):
-    """Enum used to specify known Field types"""
+    """Enum-style class used to specify known Field types"""
     DIMENSION, DIMENSION_GROUP, FILTER, MEASURE = range(1, 5)
 
     @classmethod
@@ -52,8 +52,7 @@ class Field(BaseGenerator):
 
     """
     def __init__(self, field_type, name, type=DEFAULT_TYPE, label=None,
-                 sql=None, primary_key=None, hidden=None,
-                 file=None, **kwargs):
+                 sql=None, hidden=None, file=None, **kwargs):
         super(Field, self).__init__(file=file)
         self.field_type = field_type
         self.type_name = FieldType.type_name(field_type)
@@ -61,7 +60,6 @@ class Field(BaseGenerator):
         self.type = type
         self.label = label
         self.sql = sql
-        self.primary_key = primary_key
         self.hidden = hidden
 
     def generate_lookml(self, file=None, format_options=None):
@@ -79,9 +77,6 @@ class Field(BaseGenerator):
         fo = format_options if format_options else self.format_options
         f.write('{indent}{self.type_name}: {self.name} {{\n'.
                 format(indent=' ' * fo.indent_spaces, self=self))
-        if self.primary_key:
-            f.write('{indent}primary_key: yes\n'.
-                    format(indent=' ' * 2 * fo.indent_spaces))
         if self.hidden:
             f.write('{indent}hidden: yes\n'.
                     format(indent=' ' * 2 * fo.indent_spaces))
@@ -111,8 +106,14 @@ class Dimension(Field):
     :type name: string
 
     """
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, primary_key=None, **kwargs):
         super(Dimension, self).__init__(FieldType.DIMENSION, name, **kwargs)
+        self.primary_key = primary_key
+
+    def _generate(self, f, fo):
+        if self.primary_key:
+            f.write('{indent}primary_key: yes\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces))
 
 
 class DimensionGroup(Field):
