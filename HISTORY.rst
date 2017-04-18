@@ -10,3 +10,9 @@ History
 0.1.1 (2017-04-17)
 ------------------
 * Switch to lookmlgen for module name
+
+0.1.2 (2017-04-18)
+------------------
+* Move primary_key from Field to Dimension
+* Remove stub for command line use
+* Add docstrings
