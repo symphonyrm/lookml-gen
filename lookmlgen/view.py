@@ -16,10 +16,22 @@ from field import FieldType
 class View(BaseGenerator):
     """Generates a LookML View
 
-    Initialize a View object with your parameters,  
-    add Fields such as :class:`Dimensions`s, :class:`Measures`s,
-    :class:`DimensionGroups`s, and :class:`Filters`s, and then
-    generate LookML for the view using :method:`generate_lookml`
+    Initialize a View object with your parameters,
+    add Fields such as :class:`~lookmlgen.field.Dimension`,
+    :class:`~lookmlgen.field.Measure`,
+    :class:`~lookmlgen.field.DimensionGroup`, and
+    :class:`~lookmlgen.field.Filter`, and then
+    generate LookML for the view using :py:meth:`~View.generate_lookml`
+
+    :param name: Name of the view
+    :param label: Label to use for the view (may contain spaces)
+    :param sql_table_name: Name of the SQL table to use in the view
+    :param file: File handle of a file open for writing or a
+                 StringIO object
+    :type name: string
+    :type label: string
+    :type sql_table_name: list of strings
+    :type file: File handle or StringIO object
 
     """
     def __init__(self, name, label=None, sql_table_name=None, file=None):
@@ -33,11 +45,13 @@ class View(BaseGenerator):
     def generate_lookml(self, file=None, format_options=None):
         """ Writes LookML for the view to a file or StringIO buffer.
 
-        Args:
-            file(filehandle): Filehandle of a file open for writing or a
-            StringIO object
-            format_options(:class:`GeneratorFormatOptions`): Formatting
-            options to use during generation
+        :param file: File handle of a file open for writing or a
+                     StringIO object
+        :param format_options: Formatting options to use during generation
+        :type file: File handle or StringIO object
+        :type format_options:
+            :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
         """
         if not file and not self.file:
             raise ValueError('Must provide a file in either the constructor '
@@ -71,12 +85,14 @@ class View(BaseGenerator):
         return
 
     def add_field(self, field):
-        """Adds a :class:`Field` object to a :class:`View`"""
+        """Adds a :class:`~lookmlgen.field.Field` object to a :class:`View`"""
         self.fields[field.name] = field
         return
 
     def add_derived_table(self, derived_table):
-        """Adds a :class:`DerivedTable` object to a :class:`View`"""
+        """Adds a :class:`~lookmlgen.view.DerivedTable` object to a
+         :class:`View`
+        """
         self.derived_table = derived_table
 
     @classmethod
@@ -93,6 +109,19 @@ class View(BaseGenerator):
 
 
 class DerivedTable(BaseGenerator):
+    """Generates the LookML View parameters to support derived
+    tables, including persistent derived tables (PDTs).
+
+    :param sql: SQL statement to execute
+    :param sql_trigger_value: SQL to determine when to trigger build
+    :param indexes: List of coluxn names to use as indexes
+    :param file: File handle of a file open for writing or a StringIO object
+    :type sql: string
+    :type sql_trigger_value: string
+    :type indexes: list of strings
+    :type file: File handle or StringIO object
+
+    """
     def __init__(self, sql, sql_trigger_value=None, indexes=None, file=None):
         super(DerivedTable, self).__init__(file=file)
         self.sql = sql
@@ -100,6 +129,16 @@ class DerivedTable(BaseGenerator):
         self.indexes = indexes
 
     def generate_lookml(self, file=None, format_options=None):
+        """ Writes LookML for the derived table to a file or StringIO buffer.
+
+        :param file: File handle of a file open for writing or a
+                     StringIO object
+        :param format_options: Formatting options to use during generation
+        :type file: File handle or StringIO object
+        :type format_options:
+            :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
+        """
         if not file and not self.file:
             raise ValueError('Must provide a file in either the constructor '
                              'or as a parameter to generate_lookml()')
