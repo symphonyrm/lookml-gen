@@ -9,9 +9,10 @@ Contents:
    readme
    installation
    usage
-   contributing
-   authorshistory
    modules
+   contributing
+   authors
+   history
 
 Indices and tables
 ==================
