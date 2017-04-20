@@ -14,7 +14,7 @@ view: pdt_view {
   dimension: id {
     type: number
     primary_key: yes
-    sql: ${TABLE}.c ;;
+    sql: ${TABLE}.id ;;
   }
 
   measure: sum_c {
