@@ -47,8 +47,8 @@ Use it::
 
     view_name = 'my_view'
     v = View(view_name)
-    v.add_field(Dimension('id', sql='${TABLE}.id', type='number', primary_key=True))
-    v.add_field(Dimension('c', sql='${TABLE}.c', type='number'))
+    v.add_field(Dimension('id', type='number', primary_key=True))
+    v.add_field(Dimension('c', type='number'))
     v.add_field(Measure('sum_c', sql='${TABLE}.c', type='sum'))
 
     with open('%s.view.lkml' % view_name, 'w') as f:
