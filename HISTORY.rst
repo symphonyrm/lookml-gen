@@ -16,3 +16,7 @@ History
 * Move primary_key from Field to Dimension
 * Remove stub for command line use
 * Add docstrings
+
+0.1.3 (2017-04-20)
+------------------
+* Default sql parameter of fields to ${TABLE}.field_name
