@@ -4,15 +4,16 @@ Usage
 
 To use LookML Generator in a project::
 
-    from lookmlgen import view
-    from lookmlgen import field
+    from lookmlgen.view import View
+    from lookmlgen.field import Dimension, Measure
 
-    v = view.View('my_view')
-    v.add_field(field.Dimension('id', sql='${TABLE}.id', type='number', primary_key=True))
-    v.add_field(field.Dimension('c', sql='${TABLE}.c', type='number'))
-    v.add_field(field.Measure('sum_c', sql='${TABLE}.c', type='sum'))
+    view_name = 'my_view'
+    v = View(view_name)
+    v.add_field(Dimension('id', type='number', primary_key=True))
+    v.add_field(Dimension('c', type='number'))
+    v.add_field(Measure('sum_c', sql='${TABLE}.c', type='sum'))
 
-    with open('my_view.lkml', 'w') as f:
+    with open('%s.view.lkml' % view_name, 'w') as f:
         v.generate_lookml(f)
 
 The contents of 'my_view.lkml' will be::
