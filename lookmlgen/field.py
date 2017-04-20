@@ -57,7 +57,7 @@ class Field(BaseGenerator):
         self.name = name
         self.type = type
         self.label = label
-        self.sql = sql
+        self.sql = sql if sql else '${TABLE}.%s' % name
         self.hidden = hidden
 
     def generate_lookml(self, file=None, format_options=None):
