@@ -28,12 +28,13 @@ class GeneratorFormatOptions(object):
 
     """
     def __init__(self, indent_spaces=2, newline_between_items=True,
-                 omit_default_field_type=True,
+                 omit_default_field_type=True, view_fields_alphabetical=True,
                  warning_header_comment=DEFAULT_WARNING_HEADER_COMMENT):
         self.indent_spaces = indent_spaces
         self.newline_between_items = newline_between_items
         self.omit_default_field_type = omit_default_field_type
         self.warning_header_comment = warning_header_comment
+        self.view_fields_alphabetical = view_fields_alphabetical
 
 
 @six.add_metaclass(abc.ABCMeta)

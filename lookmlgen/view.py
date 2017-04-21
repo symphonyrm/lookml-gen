@@ -4,6 +4,7 @@
     Date created: 4/8/17
 """
 import json
+from collections import OrderedDict
 try:
     from textwrap import indent
 except ImportError:
@@ -39,7 +40,7 @@ class View(BaseGenerator):
         self.name = name
         self.label = label
         self.sql_table_name = sql_table_name
-        self.fields = dict()
+        self.fields = OrderedDict()
         self.derived_table = None
 
     def generate_lookml(self, file=None, format_options=None):
@@ -76,12 +77,14 @@ class View(BaseGenerator):
             if fo.newline_between_items:
                 f.write('\n')
 
-        sorted_fields = sorted(self.fields.items())
-
-        self._gen_fields(f, fo, sorted_fields, [FieldType.FILTER])
-        self._gen_fields(f, fo, sorted_fields,
+        if fo.view_fields_alphabetical:
+            ordered_fields = sorted(self.fields.items())
+        else:
+            ordered_fields = self.fields.items()
+        self._gen_fields(f, fo, ordered_fields, [FieldType.FILTER])
+        self._gen_fields(f, fo, ordered_fields,
                          [FieldType.DIMENSION, FieldType.DIMENSION_GROUP])
-        self._gen_fields(f, fo, sorted_fields, [FieldType.MEASURE])
+        self._gen_fields(f, fo, ordered_fields, [FieldType.MEASURE])
 
         f.write('}\n')
         return
