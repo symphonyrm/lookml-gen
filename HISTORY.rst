@@ -4,7 +4,6 @@ History
 
 0.1.0 (2017-04-17)
 ------------------
-
 * First release on PyPI.
 
 0.1.1 (2017-04-17)
@@ -20,3 +19,8 @@ History
 0.1.3 (2017-04-20)
 ------------------
 * Default sql parameter of fields to ${TABLE}.field_name
+
+0.1.4 (2017-04-20)
+------------------
+* Support sql_table_name
+* Add formatting option for alphabetical view fields or not
