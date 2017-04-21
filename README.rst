@@ -43,16 +43,19 @@ Install it::
 Use it::
 
     from lookmlgen.view import View
-    from lookmlgen.field import Dimension, Measure
+    from lookmlgen.field import Dimension, DimensionGroup, Measure
+    from lookmlgen.base_generator import GeneratorFormatOptions
 
     view_name = 'my_view'
-    v = View(view_name)
+    v = View(view_name, sql_table_name='my_table')
     v.add_field(Dimension('id', type='number', primary_key=True))
-    v.add_field(Dimension('c', type='number'))
-    v.add_field(Measure('sum_c', sql='${TABLE}.c', type='sum'))
+    v.add_field(DimensionGroup('created'))
+    v.add_field(Dimension('name'))
+    v.add_field(Dimension('quantity', type='number'))
+    v.add_field(Measure('total_quantity', sql='${TABLE}.quantity', type='sum'))
 
     with open('%s.view.lkml' % view_name, 'w') as f:
-        v.generate_lookml(f)
+        v.generate_lookml(f, GeneratorFormatOptions(view_fields_alphabetical=False))
 
 See it::
 
@@ -60,21 +63,33 @@ See it::
     # Any edits you make will be lost the next time it is
     # re-generated.
     view: my_view {
-
-      dimension: c {
-        type: number
-        sql: ${TABLE}.c ;;
-      }
+      sql_table_name: my_table ;;
 
       dimension: id {
-        primary_key: yes
         type: number
+        primary_key: yes
         sql: ${TABLE}.id ;;
       }
 
-      measure: sum_c {
+      dimension_group: created {
+        type: time
+        timeframes: ["time", "date", "week", "month"]
+        datatype: datetime
+        sql: ${TABLE}.created ;;
+      }
+
+      dimension: name {
+        sql: ${TABLE}.name ;;
+      }
+
+      dimension: quantity {
+        type: number
+        sql: ${TABLE}.quantity ;;
+      }
+
+      measure: total_quantity {
         type: sum
-        sql: ${TABLE}.c ;;
+        sql: ${TABLE}.quantity ;;
       }
     }
 
