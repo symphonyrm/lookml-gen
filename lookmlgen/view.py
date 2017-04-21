@@ -61,6 +61,9 @@ class View(BaseGenerator):
         if fo.warning_header_comment:
             f.write(fo.warning_header_comment)
         f.write('view: {self.name} {{\n'.format(self=self))
+        if self.sql_table_name:
+            f.write('{indent}sql_table_name: {self.sql_table_name} ;;\n'.
+                    format(indent=' ' * fo.indent_spaces, self=self))
         if self.label:
             f.write('{indent}label: "{self.label}"\n'.
                     format(indent=' ' * fo.indent_spaces, self=self))
@@ -70,9 +73,8 @@ class View(BaseGenerator):
 
         if self.derived_table:
             self.derived_table.generate_lookml(file=f, format_options=fo)
-
-        if fo.newline_between_items:
-            f.write('\n')
+            if fo.newline_between_items:
+                f.write('\n')
 
         sorted_fields = sorted(self.fields.items())
 
