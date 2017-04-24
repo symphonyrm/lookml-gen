@@ -24,3 +24,7 @@ History
 ------------------
 * Support sql_table_name
 * Add formatting option for alphabetical view fields or not
+
+0.1.5 (2017-04-24)
+------------------
+* Rename add_derived_table method to set_derived_table in View

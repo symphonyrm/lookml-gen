@@ -94,7 +94,7 @@ class View(BaseGenerator):
         self.fields[field.name] = field
         return
 
-    def add_derived_table(self, derived_table):
+    def set_derived_table(self, derived_table):
         """Adds a :class:`~lookmlgen.view.DerivedTable` object to a
          :class:`View`
         """
