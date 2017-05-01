@@ -8,10 +8,10 @@ from collections import OrderedDict
 try:
     from textwrap import indent
 except ImportError:
-    from util import indent
+    from .util import indent
 
-from base_generator import BaseGenerator
-from field import FieldType
+from .base_generator import BaseGenerator
+from .field import FieldType
 
 
 class View(BaseGenerator):

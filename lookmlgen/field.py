@@ -5,7 +5,7 @@
 """
 import json
 
-from base_generator import BaseGenerator
+from .base_generator import BaseGenerator
 
 DEFAULT_TYPE = 'string'
 
