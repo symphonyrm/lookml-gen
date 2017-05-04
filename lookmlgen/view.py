@@ -152,9 +152,9 @@ class DerivedTable(BaseGenerator):
         f.write('{indent}derived_table: {{\n'.
                 format(indent=' ' * fo.indent_spaces))
         if self.sql:
-            final_sql = self.sql if '\n' not in self.sql \
+            final_sql = ' ' + self.sql if '\n' not in self.sql \
                 else '\n' + indent(self.sql, ' ' * 3 * fo.indent_spaces)
-            f.write('{indent}sql: {sql} ;;\n'.
+            f.write('{indent}sql:{sql} ;;\n'.
                     format(indent=' ' * 2 * fo.indent_spaces, sql=final_sql))
         if self.sql_trigger_value:
             f.write('{indent}sql_trigger_value: '
