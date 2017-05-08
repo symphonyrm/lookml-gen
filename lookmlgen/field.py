@@ -40,6 +40,7 @@ class Field(BaseGenerator):
     :param sql: SQL snippet for the field
     :param hidden: Flag to designate the field as hidden
     :param file: File handle of a file open for writing or a StringIO object
+    :param group_label: Group label to use for grouping the field
     :type field_type: a class variable from :class:`FieldType`
     :type name: string
     :type type: string
@@ -47,16 +48,18 @@ class Field(BaseGenerator):
     :type sql: string
     :type hidden: bool
     :type file: File handle or StringIO object
+    :type group_label: string
 
     """
     def __init__(self, field_type, name, type=DEFAULT_TYPE, label=None,
-                 sql=None, hidden=None, file=None, **kwargs):
+                 sql=None, hidden=None, file=None, group_label=None, **kwargs):
         super(Field, self).__init__(file=file)
         self.field_type = field_type
         self.type_name = FieldType.type_name(field_type)
         self.name = name
         self.type = type
         self.label = label
+        self.group_label = group_label
         self.sql = sql if sql else '${TABLE}.%s' % name
         self.hidden = hidden
 
@@ -80,6 +83,9 @@ class Field(BaseGenerator):
                     format(indent=' ' * 2 * fo.indent_spaces))
         if self.label:
             f.write('{indent}label: "{self.label}"\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces, self=self))
+        if self.group_label:
+            f.write('{indent}group_label: "{self.group_label}"\n'.
                     format(indent=' ' * 2 * fo.indent_spaces, self=self))
         if self.type and not (fo.omit_default_field_type and
                               self.type == DEFAULT_TYPE):
