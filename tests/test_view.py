@@ -47,3 +47,17 @@ def test_pdt_view():
                            'expected_output/%s.lkml' % testname),
               'rt') as expected:
         assert lookml == expected.read()
+
+
+def test_dimension_group():
+    testname = 'dimension_group_test'
+    v = view.View(testname)
+    v.add_field(field.DimensionGroup('dimension1', sql='${TABLE}.dim1'))
+    f = six.StringIO()
+    v.generate_lookml(f, format_options=test_format_options)
+    lookml = f.getvalue()
+    six.print_(lookml)
+    with open(os.path.join(os.path.dirname(__file__),
+                           'expected_output/%s.lkml' % testname),
+              'rt') as expected:
+        assert lookml == expected.read()

@@ -147,7 +147,7 @@ class DimensionGroup(Field):
         if self.timeframes:
             f.write('{indent}timeframes: {timeframes}\n'.
                     format(indent=' ' * 2 * fo.indent_spaces,
-                           timeframes=json.dumps(self.timeframes)))
+                           timeframes=json.dumps(self.timeframes).replace('"', '')))
         if self.datatype:
             f.write('{indent}datatype: {self.datatype}\n'.
                     format(indent=' ' * 2 * fo.indent_spaces, self=self))
