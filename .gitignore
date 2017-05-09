@@ -66,3 +66,8 @@ target/
 
 # IDEs
 .idea/
+
+# pipenv
+Pipfile
+.venv/
+
