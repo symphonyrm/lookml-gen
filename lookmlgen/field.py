@@ -137,13 +137,13 @@ class DimensionGroup(Field):
     def __init__(self, name, timeframes=None, datatype='datetime', **kwargs):
         super(DimensionGroup, self).__init__(FieldType.DIMENSION_GROUP, name,
                                              type='time', **kwargs)
-        if not timeframes:
-            self.timeframes = ['time', 'date', 'week', 'month']
-        else:
-            self.timeframes = timeframes
+        self.timeframes = timeframes
         self.datatype = datatype
 
     def _generate(self, f, fo):
+        if not self.timeframes and not fo.omit_time_frames_if_not_set:
+            self.timeframes = ['time', 'date', 'week', 'month']
+
         if self.timeframes:
             f.write('{indent}timeframes: {timeframes}\n'.
                     format(indent=' ' * 2 * fo.indent_spaces,

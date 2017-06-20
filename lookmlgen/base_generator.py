@@ -21,20 +21,28 @@ class GeneratorFormatOptions(object):
     :param warning_header_comment: Text to use as a comment as the top
                                    of the file warning the user that the
                                    file will get overwritten
+    :param omit_time_frames_if_not_set: If no time frame is specified for
+                                        a dimension_group field, omit the
+                                        time_frames parameter. If timeframes
+                                        is not included every timeframe
+                                        option will be added to the dimension group.
     :type indent_spaces: int
     :type newline_between_items: bool
     :type omit_default_field_type: bool
     :type warning_header_comment: string
+    :type omit_time_frames_if_not_set: bool
 
     """
     def __init__(self, indent_spaces=2, newline_between_items=True,
                  omit_default_field_type=True, view_fields_alphabetical=True,
-                 warning_header_comment=DEFAULT_WARNING_HEADER_COMMENT):
+                 warning_header_comment=DEFAULT_WARNING_HEADER_COMMENT,
+                 omit_time_frames_if_not_set=False):
         self.indent_spaces = indent_spaces
         self.newline_between_items = newline_between_items
         self.omit_default_field_type = omit_default_field_type
         self.warning_header_comment = warning_header_comment
         self.view_fields_alphabetical = view_fields_alphabetical
+        self.omit_time_frames_if_not_set = omit_time_frames_if_not_set
 
 
 @six.add_metaclass(abc.ABCMeta)
