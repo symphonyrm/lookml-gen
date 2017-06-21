@@ -61,3 +61,19 @@ def test_dimension_group():
                            'expected_output/%s.lkml' % testname),
               'rt') as expected:
         assert lookml == expected.read()
+
+
+def test_dimension_group_no_timeframes():
+    testname = 'dimension_group_no_timeframes_test'
+    v = view.View(testname)
+    v.add_field(field.DimensionGroup('dimension1', sql='${TABLE}.dim1'))
+    f = six.StringIO()
+    fo_omit_timeframes = base_generator.\
+        GeneratorFormatOptions(warning_header_comment=None, omit_time_frames_if_not_set=True)
+    v.generate_lookml(f, format_options=fo_omit_timeframes)
+    lookml = f.getvalue()
+    six.print_(lookml)
+    with open(os.path.join(os.path.dirname(__file__),
+                           'expected_output/%s.lkml' % testname),
+              'rt') as expected:
+        assert lookml == expected.read()
