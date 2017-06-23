@@ -41,6 +41,7 @@ class Field(BaseGenerator):
     :param hidden: Flag to designate the field as hidden
     :param file: File handle of a file open for writing or a StringIO object
     :param group_label: Group label to use for grouping the field
+    :param description: Field description that is show if a user hovers over the help link in the field picker
     :type field_type: a class variable from :class:`FieldType`
     :type name: string
     :type type: string
@@ -49,10 +50,11 @@ class Field(BaseGenerator):
     :type hidden: bool
     :type file: File handle or StringIO object
     :type group_label: string
+    :type description: string
 
     """
     def __init__(self, field_type, name, type=DEFAULT_TYPE, label=None,
-                 sql=None, hidden=None, file=None, group_label=None, **kwargs):
+                 sql=None, hidden=None, file=None, group_label=None, description=None, **kwargs):
         super(Field, self).__init__(file=file)
         self.field_type = field_type
         self.type_name = FieldType.type_name(field_type)
@@ -62,6 +64,7 @@ class Field(BaseGenerator):
         self.group_label = group_label
         self.sql = sql if sql else '${TABLE}.%s' % name
         self.hidden = hidden
+        self.description = description
 
     def generate_lookml(self, file=None, format_options=None):
         """ Writes LookML for a field to a file or StringIO buffer.
@@ -87,6 +90,11 @@ class Field(BaseGenerator):
         if self.group_label:
             f.write('{indent}group_label: "{self.group_label}"\n'.
                     format(indent=' ' * 2 * fo.indent_spaces, self=self))
+
+        if self.description:
+            f.write('{indent}description: "{self.description}"\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces, self=self))
+
         if self.type and not (fo.omit_default_field_type and
                               self.type == DEFAULT_TYPE):
             f.write('{indent}type: {self.type}\n'.
