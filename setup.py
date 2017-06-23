@@ -31,7 +31,7 @@ test_requirements = [
 
 setup(
     name='lookml-gen',
-    version='0.1.7',
+    version='0.1.8',
     description="Programmatically generate LookML",
     long_description=readme + '\n\n' + history,
     author="Joe Schmid",
