@@ -54,6 +54,7 @@ class View(BaseGenerator):
             :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
 
         """
+
         if not file and not self.file:
             raise ValueError('Must provide a file in either the constructor '
                              'or as a parameter to generate_lookml()')
@@ -78,13 +79,14 @@ class View(BaseGenerator):
                 f.write('\n')
 
         if fo.view_fields_alphabetical:
-            ordered_fields = sorted(self.fields.items())
+            self.__ordered_fields = sorted(self.fields.items())
         else:
-            ordered_fields = self.fields.items()
-        self._gen_fields(f, fo, ordered_fields, [FieldType.FILTER])
-        self._gen_fields(f, fo, ordered_fields,
-                         [FieldType.DIMENSION, FieldType.DIMENSION_GROUP])
-        self._gen_fields(f, fo, ordered_fields, [FieldType.MEASURE])
+            self.__ordered_fields = self.fields.items()
+        self.__generated_fields = []
+
+        self._gen_fields(f, fo, [FieldType.FILTER])
+        self._gen_fields(f, fo, [FieldType.DIMENSION, FieldType.DIMENSION_GROUP])
+        self._gen_fields(f, fo, [FieldType.MEASURE])
 
         f.write('}\n')
         return
@@ -100,17 +102,14 @@ class View(BaseGenerator):
         """
         self.derived_table = derived_table
 
-    @classmethod
-    def _gen_fields(cls, f, fo, sorted_fields, field_types):
-        first = True
-        for k, d in sorted_fields:
-            if not first and fo.newline_between_items:
-                f.write('\n')
+    def _gen_fields(self, f, fo, field_types):
+        for k, d in self.__ordered_fields:
             if d.field_type not in field_types:
                 continue
+            if len(self.__generated_fields) != 0 and fo.newline_between_items:
+                f.write('\n')
             d.generate_lookml(file=f, format_options=fo)
-            if first:
-                first = False
+            self.__generated_fields.append(d)
 
 
 class DerivedTable(BaseGenerator):

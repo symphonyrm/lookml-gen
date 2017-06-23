@@ -77,3 +77,20 @@ def test_dimension_group_no_timeframes():
                            'expected_output/%s.lkml' % testname),
               'rt') as expected:
         assert lookml == expected.read()
+
+
+def test_newlines():
+    testname = 'newlines_test'
+    v = view.View(testname)
+    for l in ['a', 'b', 'c', 'd']:
+        v.add_field(field.Dimension(l, type='number'))
+        v.add_field(field.Measure('sum_' + l, type='sum', sql='${{{0}}}'.format(l)))
+
+    f = six.StringIO()
+    v.generate_lookml(f, format_options=test_format_options)
+    lookml = f.getvalue()
+    six.print_(lookml)
+    with open(os.path.join(os.path.dirname(__file__),
+                           'expected_output/%s.lkml' % testname),
+              'rt') as expected:
+        assert lookml == expected.read()
