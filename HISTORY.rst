@@ -33,3 +33,7 @@ History
 ------------------
 * Added formatting option to omit timeframe generating params if they're not set
 * Update pytest to 3.1.2, cryptography to 1.9, sphinx to 1.6.2
+
+0.1.8 (2017-06-23)
+------------------
+* Add a description parameter to fields
