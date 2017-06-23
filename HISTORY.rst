@@ -37,3 +37,7 @@ History
 0.1.8 (2017-06-23)
 ------------------
 * Add a description parameter to fields
+
+0.1.9 (2017-06-23)
+------------------
+* Bug fix for extra newlines between field type sections
