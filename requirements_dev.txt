@@ -1,12 +1,12 @@
 pip==9.0.1
 bumpversion==0.5.3
-backports.tempfile==1.0rc1
-wheel==0.29.0
+backports.tempfile==1.0
+wheel==0.30.0
 watchdog==0.8.3
 flake8==3.5.0
-tox==2.7.0
+tox==2.9.1
 coverage==4.4.1
-six==1.10.0
+six==1.11.0
 Sphinx==1.6.2
 cryptography==1.9
 PyYAML==3.12
