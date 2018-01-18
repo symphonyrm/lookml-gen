@@ -9,12 +9,22 @@ deploy:
     secure: O5gt3gqIc/BPcz/OGPX7CiRj3uuQuJtH8FifeHQMo0fmAgnqNDtAhlPEpy+r8BlC0+O9tDiXto5qCgVW66omStcCckNfmMIUC37oPbDxHDALny7gm81irxrxHVArRycptiekE3cJOqrFB+jChtNDQL1U8hbs5WCgxfEP+hYOdaeTUmP5FhxVFA3Esd6BW0xJ2s/9hvwtFpLTvWXKOxL5XRXZtX5E2eJ4gjZt07Hq4AbpGo3SY83ZKW+x6cNJSJg5MZBvwz8DULX+Xn636I4PYba3x5MBkoTa3kYqPwrccJyUWQ6aG3oXVNLnxXIwbaMiB7nriyYXMVycBO1sMq9NfjEIgvtvl07OJGVMTxnQ+KkrLQ9s6Q3p9pwn2+D3/reoIvTCbMWED2+sHNHsP29kJH0HJZLjpzG5ahgwLtxH1mMPH8k6VKPJW6bGhXbwW0dOwXtd929/OULgrSksjXTQx9/FjV8CIIhOOeXjUyhPRCfMUquINS6PciJ5oaJwKE2jgK3zFcOtAOOwA7mwEwt9km94nb0oKyihKuHHLmIYRsMa5J2oWeKQhD3n0GmiLzqRXMVC3FuyQpgHrcRGa6iKdAJq7FZfYfaNNTj+N0x5RNl/cobQHXK7Oqy6q88Gel2kclTz0VfL9XFy7USlSKNXPzA42m2KDq8kO0YK7XCVi7M=
   provider: pypi
   user: joeschmid
-env:
-- TOXENV=py35
-- TOXENV=py34
-- TOXENV=py33
-- TOXENV=py27
+matrix:
+  include:
+    - language: python
+      python: "2.7"
+      env: TOXENV=py27
+
+    - language: python
+      python: "3.4"
+      env: TOXENV=py34
+
+    - language: python
+      python: "3.5"
+      env: TOXENV=py35
+
+    - language: python
+      python: "3.6"
+      env: TOXENV=py36
 install: pip install -U tox
-language: python
-python: 3.5
 script: tox -e ${TOXENV}
