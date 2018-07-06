@@ -9,5 +9,5 @@ coverage==4.4.2
 six==1.11.0
 Sphinx==1.6.6
 cryptography==2.1.4
-PyYAML==3.12
+PyYAML==3.13
 pytest==3.3.2
