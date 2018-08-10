@@ -4,7 +4,7 @@ backports.tempfile==1.0
 wheel==0.30.0
 watchdog==0.8.3
 flake8==3.5.0
-tox==2.9.1
+tox==3.2.1
 coverage==4.4.2
 six==1.11.0
 Sphinx==1.6.6
