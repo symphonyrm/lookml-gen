@@ -164,3 +164,70 @@ class DerivedTable(BaseGenerator):
                     format(indent=' ' * 2 * fo.indent_spaces,
                            indexes=json.dumps(self.indexes)))
         f.write('{indent}}}\n'.format(indent=' ' * fo.indent_spaces))
+
+
+class DerivedTableCreateProcess(BaseGenerator):
+    """Generates the LookML View parameters to support derived
+    tables, including persistent derived tables (PDTs), using a create_process involving separate CREATE and INSERT
+    steps
+
+    :param create_sql: SQL statement to execute to create the derived table
+    :param insert_sql: SQL statement to execute to insert into the derived table
+    :param sql: SQL statement showing both the create and insert steps
+    :param sql_trigger_value: SQL to determine when to trigger build
+    :param indexes: List of coluxn names to use as indexes
+    :param file: File handle of a file open for writing or a StringIO object
+    :type sql: string
+    :type sql_trigger_value: string
+    :type indexes: list of strings
+    :type file: File handle or StringIO object
+
+    """
+    def __init__(self, create_sql, insert_sql, sql_trigger_value=None, indexes=None, file=None):
+        super(DerivedTableCreateProcess, self).__init__(file=file)
+        self.create_sql = create_sql
+        self.insert_sql = insert_sql
+        self.sql = create_sql + '\n\n' + insert_sql
+        self.sql_trigger_value = sql_trigger_value
+        self.indexes = indexes
+
+    def generate_lookml(self, file=None, format_options=None):
+        """ Writes LookML for a derived table to a file or StringIO buffer.
+
+        :param file: File handle of a file open for writing or a
+                     StringIO object
+        :param format_options: Formatting options to use during generation
+        :type file: File handle or StringIO object
+        :type format_options:
+            :class:`~lookmlgen.base_generator.GeneratorFormatOptions`
+
+        """
+        if not file and not self.file:
+            raise ValueError('Must provide a file in either the constructor '
+                             'or as a parameter to generate_lookml()')
+        f = file if file else self.file
+        fo = format_options if format_options else self.format_options
+        f.write('{indent}derived_table: {{\n'.
+                format(indent=' ' * fo.indent_spaces))
+        f.write('{indent}create_process: {{\n'.
+                format(indent=' ' * fo.indent_spaces))
+        if self.create_sql:
+            final_sql = ' ' + self.create_sql if '\n' not in self.create_sql \
+                else '\n' + indent(self.create_sql, ' ' * 3 * fo.indent_spaces)
+            f.write('{indent}sql_step:{sql} ;;\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces, sql=final_sql))
+        if self.insert_sql:
+            final_sql = ' ' + self.insert_sql if '\n' not in self.insert_sql \
+                else '\n' + indent(self.insert_sql, ' ' * 3 * fo.indent_spaces)
+            f.write('{indent}sql_step:{sql} ;;\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces, sql=final_sql))
+        f.write('{indent} }}\n'.format(indent=' ' * fo.indent_spaces))
+        if self.sql_trigger_value:
+            f.write('{indent}sql_trigger_value: '
+                    '{self.sql_trigger_value} ;;\n'.
+                    format(indent=' ' * 2 * fo.indent_spaces, self=self))
+        # if self.indexes:
+        #     f.write('{indent}indexes: {indexes}\n'.
+        #             format(indent=' ' * 2 * fo.indent_spaces,
+        #                    indexes=json.dumps(self.indexes)))
+        f.write('{indent}}}\n'.format(indent=' ' * fo.indent_spaces))
