@@ -28,8 +28,9 @@ Programmatically generate LookML
 Features
 --------
 
-* Generate LookML views programmatically
+* Generate LookML views and models programmatically
 * Include dimensions, dimension groups, filters, and measures in your views
+* Include connections, include statements, and explores in your models
 * Support Persistent Derived Tables (PDTs)
 * Write output to files or StringIO buffers
 
@@ -97,7 +98,7 @@ TODOs
 -----
 
 Full LookML support is far from complete right now. At the moment only very basic
-aspects of Views and Fields are supported.  
+aspects of Views and Fields are supported.
 However, it does cover the most common functionality, including Persistent Derived
 Tables. The code can easily be extended and we'd love to get pull requests to fill
 out additional functionality.
