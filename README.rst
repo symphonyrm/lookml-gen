@@ -97,7 +97,7 @@ TODOs
 -----
 
 Full LookML support is far from complete right now. At the moment only very basic
-aspects of Views and Fields are supported and there is no support for Explores yet.
+aspects of Views and Fields are supported.
 However, it does cover the most common functionality, including Persistent Derived
 Tables. The code can easily be extended and we'd love to get pull requests to fill
 out additional functionality.
