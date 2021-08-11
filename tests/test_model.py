@@ -4,14 +4,16 @@
     Date Created: 8/10/2021
 """
 
-import six
 import os
 
-from lookmlgen import model 
-from lookmlgen import field 
-from lookmlgen import base_generator
+import six
 
-test_format_options = base_generator.GeneratorFormatOptions(warning_header_comment=None)
+from lookmlgen import base_generator, field, model
+
+test_format_options = base_generator.GeneratorFormatOptions(
+    warning_header_comment=None
+)
+
 
 def test_basic_model():
     testname = "basic_model"
@@ -22,5 +24,10 @@ def test_basic_model():
 
     m.generate_lookml(f, format_options=test_format_options)
     lookml = f.getvalue()
-    with open(os.path.join(os.path.dirname(__file__), 'expected_output/%s.lkml' % testname), 'rt') as expected:
+    with open(
+        os.path.join(
+            os.path.dirname(__file__), "expected_output/%s.lkml" % testname
+        ),
+        "rt",
+    ) as expected:
         assert lookml == expected.read()
