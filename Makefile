@@ -50,6 +50,13 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	flake8 lookmlgen tests
 
+BLACK_TARGETS := $(shell find . -name "*.py" -not -path "*/.venv/*" -not -path "*/.tox/*")
+
+fmt: ## Apply style with isort and black and check it with lint
+	isort $(BLACK_TARGETS) --apply
+	black $(BLACK_TARGETS) --line-length 79
+	make lint
+
 test: ## run tests quickly with the default Python
 	py.test
 

@@ -5,6 +5,7 @@
 """
 import json
 from collections import OrderedDict
+
 try:
     from textwrap import indent
 except ImportError:
@@ -35,6 +36,7 @@ class View(BaseGenerator):
     :type file: File handle or StringIO object
 
     """
+
     def __init__(self, name, label=None, sql_table_name=None, file=None):
         super(View, self).__init__(file=file)
         self.name = name
@@ -44,7 +46,7 @@ class View(BaseGenerator):
         self.derived_table = None
 
     def generate_lookml(self, file=None, format_options=None):
-        """ Writes LookML for the view to a file or StringIO buffer.
+        """Writes LookML for the view to a file or StringIO buffer.
 
         :param file: File handle of a file open for writing or a
                      StringIO object
@@ -56,27 +58,35 @@ class View(BaseGenerator):
         """
 
         if not file and not self.file:
-            raise ValueError('Must provide a file in either the constructor '
-                             'or as a parameter to generate_lookml()')
+            raise ValueError(
+                "Must provide a file in either the constructor "
+                "or as a parameter to generate_lookml()"
+            )
         f = file if file else self.file
         fo = format_options if format_options else self.format_options
         if fo.warning_header_comment:
             f.write(fo.warning_header_comment)
-        f.write('view: {self.name} {{\n'.format(self=self))
+        f.write("view: {self.name} {{\n".format(self=self))
         if self.sql_table_name:
-            f.write('{indent}sql_table_name: {self.sql_table_name} ;;\n'.
-                    format(indent=' ' * fo.indent_spaces, self=self))
+            f.write(
+                "{indent}sql_table_name: {self.sql_table_name} ;;\n".format(
+                    indent=" " * fo.indent_spaces, self=self
+                )
+            )
         if self.label:
-            f.write('{indent}label: "{self.label}"\n'.
-                    format(indent=' ' * fo.indent_spaces, self=self))
+            f.write(
+                '{indent}label: "{self.label}"\n'.format(
+                    indent=" " * fo.indent_spaces, self=self
+                )
+            )
 
         if fo.newline_between_items:
-            f.write('\n')
+            f.write("\n")
 
         if self.derived_table:
             self.derived_table.generate_lookml(file=f, format_options=fo)
             if fo.newline_between_items:
-                f.write('\n')
+                f.write("\n")
 
         if fo.view_fields_alphabetical:
             self.__ordered_fields = sorted(self.fields.items())
@@ -85,10 +95,12 @@ class View(BaseGenerator):
         self.__generated_fields = []
 
         self._gen_fields(f, fo, [FieldType.FILTER])
-        self._gen_fields(f, fo, [FieldType.DIMENSION, FieldType.DIMENSION_GROUP])
+        self._gen_fields(
+            f, fo, [FieldType.DIMENSION, FieldType.DIMENSION_GROUP]
+        )
         self._gen_fields(f, fo, [FieldType.MEASURE])
 
-        f.write('}\n')
+        f.write("}\n")
         return
 
     def add_field(self, field):
@@ -98,7 +110,7 @@ class View(BaseGenerator):
 
     def set_derived_table(self, derived_table):
         """Adds a :class:`~lookmlgen.view.DerivedTable` object to a
-         :class:`View`
+        :class:`View`
         """
         self.derived_table = derived_table
 
@@ -107,7 +119,7 @@ class View(BaseGenerator):
             if d.field_type not in field_types:
                 continue
             if len(self.__generated_fields) != 0 and fo.newline_between_items:
-                f.write('\n')
+                f.write("\n")
             d.generate_lookml(file=f, format_options=fo)
             self.__generated_fields.append(d)
 
@@ -126,6 +138,7 @@ class DerivedTable(BaseGenerator):
     :type file: File handle or StringIO object
 
     """
+
     def __init__(self, sql, sql_trigger_value=None, indexes=None, file=None):
         super(DerivedTable, self).__init__(file=file)
         self.sql = sql
@@ -133,7 +146,7 @@ class DerivedTable(BaseGenerator):
         self.indexes = indexes
 
     def generate_lookml(self, file=None, format_options=None):
-        """ Writes LookML for a derived table to a file or StringIO buffer.
+        """Writes LookML for a derived table to a file or StringIO buffer.
 
         :param file: File handle of a file open for writing or a
                      StringIO object
@@ -144,23 +157,38 @@ class DerivedTable(BaseGenerator):
 
         """
         if not file and not self.file:
-            raise ValueError('Must provide a file in either the constructor '
-                             'or as a parameter to generate_lookml()')
+            raise ValueError(
+                "Must provide a file in either the constructor "
+                "or as a parameter to generate_lookml()"
+            )
         f = file if file else self.file
         fo = format_options if format_options else self.format_options
-        f.write('{indent}derived_table: {{\n'.
-                format(indent=' ' * fo.indent_spaces))
+        f.write(
+            "{indent}derived_table: {{\n".format(indent=" " * fo.indent_spaces)
+        )
         if self.sql:
-            final_sql = ' ' + self.sql if '\n' not in self.sql \
-                else '\n' + indent(self.sql, ' ' * 3 * fo.indent_spaces)
-            f.write('{indent}sql:{sql} ;;\n'.
-                    format(indent=' ' * 2 * fo.indent_spaces, sql=final_sql))
+            final_sql = (
+                " " + self.sql
+                if "\n" not in self.sql
+                else "\n" + indent(self.sql, " " * 3 * fo.indent_spaces)
+            )
+            f.write(
+                "{indent}sql:{sql} ;;\n".format(
+                    indent=" " * 2 * fo.indent_spaces, sql=final_sql
+                )
+            )
         if self.sql_trigger_value:
-            f.write('{indent}sql_trigger_value: '
-                    '{self.sql_trigger_value} ;;\n'.
-                    format(indent=' ' * 2 * fo.indent_spaces, self=self))
+            f.write(
+                "{indent}sql_trigger_value: "
+                "{self.sql_trigger_value} ;;\n".format(
+                    indent=" " * 2 * fo.indent_spaces, self=self
+                )
+            )
         if self.indexes:
-            f.write('{indent}indexes: {indexes}\n'.
-                    format(indent=' ' * 2 * fo.indent_spaces,
-                           indexes=json.dumps(self.indexes)))
-        f.write('{indent}}}\n'.format(indent=' ' * fo.indent_spaces))
+            f.write(
+                "{indent}indexes: {indexes}\n".format(
+                    indent=" " * 2 * fo.indent_spaces,
+                    indexes=json.dumps(self.indexes),
+                )
+            )
+        f.write("{indent}}}\n".format(indent=" " * fo.indent_spaces))
